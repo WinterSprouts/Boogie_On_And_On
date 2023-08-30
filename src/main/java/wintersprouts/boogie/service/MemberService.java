@@ -60,6 +60,6 @@ public class MemberService {
 
         Member save = memberRepository.save(member);
 
-        return StringUtils.hasText(save.getMemberId());
+        return StringUtils.hasText(save.getEmail());
     }
 }

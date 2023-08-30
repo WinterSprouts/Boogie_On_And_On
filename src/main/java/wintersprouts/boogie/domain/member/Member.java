@@ -20,22 +20,22 @@ public class Member implements UserDetails {
     @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MEMBER_INDEX")
+    @Column(name = "MEMBER_ID")
     private Long memberIndex;
 
-    @Column(name = "MEMBER_ID", updatable = false, unique = true, nullable = false)
-    private String memberId;
+    @Column(name = "MEMBER_EMAIL", updatable = false, unique = true, nullable = false)
+    private String email;
 
     @Column(name = "MEMBER_PW", nullable = false)
     private String password;
 
-    @Column(name = "ROLE")
+    @Column(name = "MEMBER_ROLE")
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @Builder
-    public Member(String memberId, String password, Role role) {
-        this.memberId = memberId;
+    public Member(String email, String password, Role role) {
+        this.email = email;
         this.password = password;
         this.role = role;
     }
@@ -54,7 +54,7 @@ public class Member implements UserDetails {
 
     @Override
     public String getUsername() {
-        return memberId;
+        return email;
     }
 
     @Override
