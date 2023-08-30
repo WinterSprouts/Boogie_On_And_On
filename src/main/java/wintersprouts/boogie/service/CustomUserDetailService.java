@@ -1,7 +1,6 @@
 package wintersprouts.boogie.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,7 +22,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
     private UserDetails createUserDetails(Member member) {
         Member build = member.builder()
-                .memberId(member.getMemberId())
+                .memberId(member.getEmail())
                 .password(member.getPassword())
                 .role(member.getRole())
                 .build();

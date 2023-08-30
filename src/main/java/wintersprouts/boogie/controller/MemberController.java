@@ -23,8 +23,9 @@ public class MemberController {
         return login;
     }
 
-    @GetMapping("/join")
+    @PostMapping("/join")
     public String join(@RequestBody MemberJoinRequestForm memberJoinRequestForm) {
+        log.info("memberJoinForm={}", memberJoinRequestForm);
         boolean result = memberService.join(memberJoinRequestForm);
         return result ? "success" : "fail";
     }
