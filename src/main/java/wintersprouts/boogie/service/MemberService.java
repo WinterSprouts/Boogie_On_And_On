@@ -53,7 +53,7 @@ public class MemberService {
     public boolean join(MemberJoinRequestForm memberJoinRequestForm) {
 
         Member member = Member.builder()
-                .memberId(memberJoinRequestForm.getJoinId())
+                .email(memberJoinRequestForm.getJoinId())
                 .password(passwordEncoder.encode(memberJoinRequestForm.getJoinPw()))
                 .role(Role.USER)
                 .build();
