@@ -43,7 +43,7 @@ public class MemberController {
     }
 
     @PostMapping("/test")
-    public String test() {
-        return "이거 보면 성공한거임";
+    public ResponseEntity<Void> test() {
+        return ResponseEntity.ok().build();
     }
 }

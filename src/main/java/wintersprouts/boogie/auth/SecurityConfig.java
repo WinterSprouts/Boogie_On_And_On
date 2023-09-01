@@ -34,6 +34,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/members/login", "/members/join").permitAll()
                 .antMatchers("/member/test").hasRole("USER")
+                .antMatchers("/donation/**").hasRole("ORGANIZATION")
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
