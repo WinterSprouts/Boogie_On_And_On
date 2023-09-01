@@ -21,7 +21,7 @@ public class Donation {
     @Column(name = "DONATION_ID")
     private Long donationId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="MEMBER_ID")
     @Column(name="DONATION_PUBLISHER")
     private Member donationPublisher;

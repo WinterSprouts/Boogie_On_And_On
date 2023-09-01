@@ -26,11 +26,6 @@ public class Donator {
     private Member member;
 
     @Column(name = "DONATOR_AMOUNT", nullable = false)
-    private String donatorAmount;
-
-
-
-
-
+    private Long donatorAmount;
 
 }
