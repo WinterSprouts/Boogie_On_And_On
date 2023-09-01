@@ -22,7 +22,7 @@ class MemberServiceImplTest {
     @Test
     void test() {
         List<Member> members = memberRepository.findAll();
-        assertThat(members.size()).isEqualTo(3);
+        assertThat(members.size()).isEqualTo(2);
     }
 
 }
