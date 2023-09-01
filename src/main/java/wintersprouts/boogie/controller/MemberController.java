@@ -9,7 +9,7 @@ import wintersprouts.boogie.auth.TokenForm;
 import wintersprouts.boogie.domain.member.Member;
 import wintersprouts.boogie.domain.member.MemberJoinRequestForm;
 import wintersprouts.boogie.domain.member.MemberLoginRequestForm;
-import wintersprouts.boogie.service.MemberService;
+import wintersprouts.boogie.service.MemberServiceImpl;
 
 @Slf4j
 @RestController
@@ -17,13 +17,13 @@ import wintersprouts.boogie.service.MemberService;
 @RequestMapping("/members")
 public class MemberController {
 
-    private final MemberService memberService;
+    private final MemberServiceImpl memberServiceImpl;
     private final PasswordEncoder passwordEncoder;
 
 
     @PostMapping("/login")
     public TokenForm login(@RequestBody MemberLoginRequestForm memberLoginRequestForm) {
-        TokenForm login = memberService.login(memberLoginRequestForm);
+        TokenForm login = memberServiceImpl.login(memberLoginRequestForm);
 
         return login;
     }
@@ -39,7 +39,7 @@ public class MemberController {
                 .role(memberJoinRequestForm.getRole())
                 .account(0L)
                 .build();
-        return memberService.join(joinMember) ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
+        return memberServiceImpl.join(joinMember) ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
     }
 
     @PostMapping("/test")
