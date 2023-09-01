@@ -44,15 +44,14 @@ public class Member implements UserDetails {
     @Column(name = "MEMBER_ACCOUNT", nullable = false)
     private Long account;
 
-    @OneToOne(mappedBy = "donationPublisher")
-    private Donation donation;
+    @OneToMany(mappedBy = "donationPublisher")
+    private List<Donation> donation = new ArrayList<>();
 
     /**
      * 내가 기부한 기부글 목록
      */
     @OneToMany(mappedBy = "member")
     private List<Donator> donated = new ArrayList<>();
-
 
     @Builder
     public Member(String email, String password, Role role) {
