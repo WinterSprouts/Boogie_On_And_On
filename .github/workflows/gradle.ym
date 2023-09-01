@@ -4,9 +4,9 @@ name: CI
 # 2 워크플로가 시작될 조건 지정
 on:
   push:
-    branches: [ master ]
+    branches: [ Develop ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ Develop ]
 
 jobs:
   build:
