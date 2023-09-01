@@ -21,13 +21,10 @@ public class CustomUserDetailService implements UserDetailsService {
     }
 
     private UserDetails createUserDetails(Member member) {
-        Member build = member.builder()
+        return member.builder()
                 .email(member.getEmail())
                 .password(member.getPassword())
                 .role(member.getRole())
                 .build();
-        build.setMemberIndex(member.getMemberIndex());
-
-        return build;
     }
 }
