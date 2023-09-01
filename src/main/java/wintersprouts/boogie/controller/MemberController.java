@@ -2,13 +2,15 @@ package wintersprouts.boogie.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import wintersprouts.boogie.auth.TokenForm;
 import wintersprouts.boogie.domain.member.Member;
 import wintersprouts.boogie.domain.member.MemberDepositMoneyForm;
 import wintersprouts.boogie.domain.member.MemberJoinRequestForm;
 import wintersprouts.boogie.domain.member.MemberLoginRequestForm;
-import wintersprouts.boogie.service.MemberService;
+import wintersprouts.boogie.service.MemberServiceImpl;
 
 import java.security.Principal;
 
@@ -18,20 +20,29 @@ import java.security.Principal;
 @RequestMapping("/members")
 public class MemberController {
 
-    private final MemberService memberService;
+    private final MemberServiceImpl memberServiceImpl;
+    private final PasswordEncoder passwordEncoder;
+
 
     @PostMapping("/login")
     public TokenForm login(@RequestBody MemberLoginRequestForm memberLoginRequestForm) {
-        TokenForm login = memberService.login(memberLoginRequestForm);
+        TokenForm login = memberServiceImpl.login(memberLoginRequestForm);
 
         return login;
     }
 
     @PostMapping("/join")
-    public String join(@RequestBody MemberJoinRequestForm memberJoinRequestForm) {
+    public ResponseEntity<Void> join(@RequestBody MemberJoinRequestForm memberJoinRequestForm) {
         log.info("memberJoinForm={}", memberJoinRequestForm);
-        boolean result = memberService.join(memberJoinRequestForm);
-        return result ? "success" : "fail";
+        Member joinMember = Member.builder()
+                .email(memberJoinRequestForm.getJoinEmail())
+                .password(passwordEncoder.encode(memberJoinRequestForm.getJoinPw()))
+                .name(memberJoinRequestForm.getName())
+                .nickname(memberJoinRequestForm.getNickname())
+                .role(memberJoinRequestForm.getRole())
+                .account(0L)
+                .build();
+        return memberServiceImpl.join(joinMember) ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
     }
 
     @PostMapping("/test")
