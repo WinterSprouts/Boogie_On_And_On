@@ -13,6 +13,7 @@ import wintersprouts.boogie.repository.MemberRepository;
 public class CustomUserDetailService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserDetails userDetails = memberRepository.findByEmail(username).map(this::createUserDetails)
@@ -26,8 +27,5 @@ public class CustomUserDetailService implements UserDetailsService {
                 .password(member.getPassword())
                 .role(member.getRole())
                 .build();
-        build.setMemberId(member.getMemberId());
-
-        return build;
     }
 }

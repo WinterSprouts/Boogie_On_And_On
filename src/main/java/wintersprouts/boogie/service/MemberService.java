@@ -26,7 +26,6 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
-    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public TokenForm login(MemberLoginRequestForm memberLoginRequestForm) {
@@ -50,18 +49,8 @@ public class MemberService {
     }
 
     @Transactional
-    public boolean join(MemberJoinRequestForm memberJoinRequestForm) {
-
-        Member member = Member.builder()
-                .email(memberJoinRequestForm.getJoinEmail())
-                .password(passwordEncoder.encode(memberJoinRequestForm.getJoinPw()))
-                .name(memberJoinRequestForm.getName())
-                .nickname(memberJoinRequestForm.getNickname())
-                .role(memberJoinRequestForm.getRole())
-                .account(memberJoinRequestForm.getAccount())
-                .build();
-
-        Member save = memberRepository.save(member);
+    public boolean join(Member joinMember) {
+        Member save = memberRepository.save(joinMember);
 
         return StringUtils.hasText(save.getEmail());
     }

@@ -9,5 +9,4 @@ public class MemberJoinRequestForm {
     private String name;
     private String nickname;
     private Role role;
-    private Long account;
 }
