@@ -58,11 +58,15 @@ public class MemberService {
                 .name(memberJoinRequestForm.getName())
                 .nickname(memberJoinRequestForm.getNickname())
                 .role(memberJoinRequestForm.getRole())
-                .account(memberJoinRequestForm.getAccount())
                 .build();
 
         Member save = memberRepository.save(member);
 
         return StringUtils.hasText(save.getEmail());
     }
+
+    public Member findByEmail(String email) {
+        return memberRepository.findByEmail(email).get();
+    }
+
 }
