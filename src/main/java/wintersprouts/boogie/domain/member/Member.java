@@ -2,6 +2,8 @@ package wintersprouts.boogie.domain.member;
 
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +19,7 @@ import java.util.*;
 @AllArgsConstructor
 @Table(name = "MEMBER")
 @ToString
+@DynamicInsert //insert 시 null인 필드 제외
 public class Member implements UserDetails {
 
     @Setter
@@ -42,6 +45,7 @@ public class Member implements UserDetails {
     private Role role;
 
     @Column(name = "MEMBER_ACCOUNT", nullable = false)
+    @ColumnDefault("0") //@DynamicInsert 덕분에 insert 시 null인 필드 제외되고 default 0으로 설정해둬서, 결론적으로 DB에 default인 0이 들어가게 됨
     private Long account;
 
     @OneToMany(mappedBy = "donationPublisher")
@@ -54,10 +58,13 @@ public class Member implements UserDetails {
     private List<Donator> donated = new ArrayList<>();
 
     @Builder
-    public Member(String email, String password, Role role) {
+    public Member(String email, String password, String name, String nickname, Role role, Long account) {
         this.email = email;
         this.password = password;
+        this.name = name;
+        this.nickname = nickname;
         this.role = role;
+        this.account = account;
     }
 
     @Override

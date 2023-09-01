@@ -4,7 +4,9 @@ import lombok.Data;
 
 @Data
 public class MemberJoinRequestForm {
-    private String joinId;
+    private String joinEmail;
     private String joinPw;
+    private String name;
+    private String nickname;
     private Role role;
 }
