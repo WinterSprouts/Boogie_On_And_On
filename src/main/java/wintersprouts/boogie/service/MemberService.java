@@ -53,9 +53,12 @@ public class MemberService {
     public boolean join(MemberJoinRequestForm memberJoinRequestForm) {
 
         Member member = Member.builder()
-                .email(memberJoinRequestForm.getJoinId())
+                .email(memberJoinRequestForm.getJoinEmail())
                 .password(passwordEncoder.encode(memberJoinRequestForm.getJoinPw()))
-                .role(Role.USER)
+                .name(memberJoinRequestForm.getName())
+                .nickname(memberJoinRequestForm.getNickname())
+                .role(memberJoinRequestForm.getRole())
+                .account(memberJoinRequestForm.getAccount())
                 .build();
 
         Member save = memberRepository.save(member);
