@@ -1,5 +1,5 @@
 # 1 워크플로의 이름 지정
-name: CI
+name: CI/CD
 
 # 2 워크플로가 시작될 조건 지정
 on:
@@ -33,3 +33,17 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew clean build
+
+      #2 현재시간가져오기
+      - name: Get current time
+        uses: josStorer/get-current-time@v2.0.2
+        id: current-time
+        with:
+          format: YYYY-MM-DDTHH-mm-ss
+          utcOffset: "+09:00"
+      # 3 배포용 패키지 경로 저장
+      - name: Set artifact
+        run: echo "artifact=$(ls ./build/libs)" >> $GITHUB_ENV
+      # 4 빈스토크 배포
+      - name: Beanstalk Deploy
+        uses: einaregilsson/beanstalk-deploy@v20
