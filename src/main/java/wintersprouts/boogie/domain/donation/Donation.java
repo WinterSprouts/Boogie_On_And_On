@@ -40,8 +40,9 @@ public class Donation {
     @Column(name = "DONATION_DUE_DATE")
     private LocalDate dueDate;
 
+    @Setter
     @Column(name="DONATION_STATUS")
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private DonationStatus status;
 
     @Column(name="DONATION_CREATE_AT")
