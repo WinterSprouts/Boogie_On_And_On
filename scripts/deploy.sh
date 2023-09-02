@@ -2,7 +2,7 @@
 
 # Modify the following variables according to your application and environment
 REPOSITORY=/home/ec2-user/boogie
-APP_NAME=boogie
+APP_NAME=boogie_cicd
 JAR_NAME=$(ls $REPOSITORY/build/libs/ | grep 'SNAPSHOT.jar' | tail -n 1)
 JAR_PATH=$REPOSITORY/build/libs/$JAR_NAME
 
