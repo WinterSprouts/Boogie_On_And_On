@@ -12,7 +12,7 @@ on:
 
 # 환경 변수 설정
 env:
-  PROJECT_NAME: Boogie_On_And_On
+  PROJECT_NAME: boogie
   BUCKET_NAME: boogie-cicd-bucket
   CODE_DEPLOY_APP_NAME: boogie_cicd
   DEPLOYMENT_GROUP_NAME: boogie_instance
