@@ -9,7 +9,7 @@ on:
       - Develop
 
 env:
-  PROJECT_NAME: boogie
+  PROJECT_NAME: Boogie_On_And_On
   BUCKET_NAME: boogie-cicd-bucket
   CODE_DEPLOY_APP_NAME: boogie_cicd
   DEPLOYMENT_GROUP_NAME: boogie_instance
