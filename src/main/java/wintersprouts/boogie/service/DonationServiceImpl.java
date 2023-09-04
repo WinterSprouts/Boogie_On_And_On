@@ -19,6 +19,9 @@ public class DonationServiceImpl implements DonationService {
 
     private final DonationRepository donationRepository;
 
+    /**
+     * 도네이션을 등록합니다.
+     */
     @Override
     @Transactional
     public boolean applyDonation(Donation donation) {
@@ -26,6 +29,10 @@ public class DonationServiceImpl implements DonationService {
         return save.getDonationId() != null;
     }
 
+    /**
+     * Donation 의 WAITING Status 를<br>
+     * APPORVED 로 변경합니다. 
+     */
     @Override
     @Transactional
     public String approved(Long donationIndex) {
