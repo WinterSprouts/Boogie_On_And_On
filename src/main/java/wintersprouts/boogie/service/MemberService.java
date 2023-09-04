@@ -9,4 +9,8 @@ public interface MemberService {
 
     public boolean join(Member member);
 
+    public Member findByEmail(String email);
+
+    public Long updateAccount(String email, Long money);
+
 }

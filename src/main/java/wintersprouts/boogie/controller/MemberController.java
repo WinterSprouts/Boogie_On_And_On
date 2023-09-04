@@ -53,16 +53,12 @@ public class MemberController {
     @PatchMapping("/deposit")
     public String deposit(Principal principal, @RequestBody MemberDepositMoneyForm memberDepositMoneyForm) {
         String email = principal.getName();
-        log.info("name={}", email);
 
-        Member member = memberService.findByEmail(email);
-        Long account = member.getAccount();
-
-        //업데이트하는 로직 필요
-
-        Long balance = account + memberDepositMoneyForm.getAddedAmount();
+        Long balance = memberServiceImpl.updateAccount(email, memberDepositMoneyForm.getAddedAmount());
 
         return "현재 잔액은 "+balance;
     }
+
+    //기부하는 로직
 
 }

@@ -44,6 +44,7 @@ public class Member implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Setter
     @Column(name = "MEMBER_ACCOUNT", nullable = false)
     @ColumnDefault("0") //@DynamicInsert 덕분에 insert 시 null인 필드 제외되고 default 0으로 설정해둬서, 결론적으로 DB에 default인 0이 들어가게 됨
     private Long account;
