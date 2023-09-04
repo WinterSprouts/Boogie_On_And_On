@@ -52,4 +52,20 @@ public class MemberServiceImpl implements MemberService {
 
         return StringUtils.hasText(save.getEmail());
     }
+
+    @Override
+    public Member findByEmail(String email) {
+        return memberRepository.findByEmail(email).get();
+    }
+
+    @Transactional
+    @Override
+    public Long updateAccount(String email, Long money) {
+        Member member = memberRepository.findByEmail(email).get();
+        Long account = member.getAccount();
+        member.setAccount(account+money);
+
+        return member.getAccount();
+    }
+
 }
