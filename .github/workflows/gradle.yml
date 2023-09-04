@@ -1,10 +1,6 @@
 name: CI/CD
 
 on:
-  workflow_dispatch:
-    inputs:
-      tags:
-        description: "test action"
   push:
     branches: [ "Develop" ]
   pull_request:
