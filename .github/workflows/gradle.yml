@@ -1,18 +1,10 @@
-name: CI/CD
+name: CI
 
 on:
   push:
     branches: [ "Develop" ]
   pull_request:
-    branches: [ "Develop" ]
-
-# --------------------------추가
-#env:
-#  PROJECT_NAME: Boogie_On_And_On
-#  BUCKET_NAME: boogie-cicd-bucket
-#  CODE_DEPLOY_APP_NAME: boogie_cicd
-#  DEPLOYMENT_GROUP_NAME: boogie_instance
-# --------------------------추가
+    branches: [ Develop ]
 
 jobs:
   build:
@@ -30,7 +22,7 @@ jobs:
       - name: Create Application YAML
         run: |
           mkdir -p ./src/main/resources
-          echo "${{ secrets.application_yml }}" > ./src/main/resources/application.yml
+          echo "${{ secrets.APPLICATION_YML }}" > ./src/main/resources/application.yml
           # cat ./src/main/resources/application.yml
 
       - name: Grant execute permission for gradlew
@@ -38,27 +30,3 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew clean build
-
-
-#      # --------------------------추가
-#      - name: Make Zip File
-#        run: zip -qq -r ./$GITHUB_SHA.zip .
-#        shell: bash
-#
-#      - name: Configure AWS credentials
-#        uses: aws-actions/configure-aws-credentials@v1
-#        with:
-#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#          aws-region: ap-northeast-2
-#
-#      - name: Upload to S3
-#        run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
-#
-#      - name: Code Deploy To EC2 instance
-#        run: aws deploy create-deployment
-#          --application-name $CODE_DEPLOY_APP_NAME
-#          --deployment-config-name CodeDeployDefault.AllAtOnce
-#          --deployment-group-name $DEPLOYMENT_GROUP_NAME
-#          --s3-location bucket=$BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
-## --------------------------추가
