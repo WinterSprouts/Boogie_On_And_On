@@ -32,7 +32,7 @@ jobs:
       - name: Create Application YAML
         run: |
           mkdir -p ./src/main/resources
-          echo "${{ secrets.BOOGIE_SECRET }}" > ./src/main/resources/application.yml
+          echo "${{ secrets.application_yml }}" > ./src/main/resources/application.yml
           cat ./src/main/resources/application.yml
 
       - name: Grant execute permission for gradlew
