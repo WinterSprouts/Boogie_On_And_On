@@ -2,11 +2,9 @@ name: CI/CD
 
 on:
   push:
-    branches:
-      - Develop
+    branches: [ test ]
   pull_request:
-    branches:
-      - Develop
+    branches: [ test ]
 
 # --------------------------추가
 #env:
@@ -41,21 +39,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew clean build
 
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{secrets.DOCKERHUB_USERNAME}}
-          password: ${{secrets.DOCKERHUB_TOKEN}}
 
-      - name: build and release to DockerHub
-        env:
-          NAME: LeeHusung # 계정 명
-          REPO: boogie # 레포 이름
-        run: |
-          docker build -t $REPO .
-          docker tag $REPO:latest $NAME/$REPO:latest
-          docker push $NAME/$REPO:latest
-#
 #      # --------------------------추가
 #      - name: Make Zip File
 #        run: zip -qq -r ./$GITHUB_SHA.zip .

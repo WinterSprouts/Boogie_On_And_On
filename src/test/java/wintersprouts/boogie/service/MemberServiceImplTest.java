@@ -21,8 +21,8 @@
 //
 //    @Test
 //    void test() {
-////        List<Member> members = memberRepository.findAll();
-////        assertThat(members.size()).isEqualTo(2);
+//        List<Member> members = memberRepository.findAll();
+//        assertThat(members.size()).isEqualTo(2);
 //    }
 //
 //}
