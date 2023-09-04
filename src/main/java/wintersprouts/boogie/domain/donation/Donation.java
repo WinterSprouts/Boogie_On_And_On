@@ -31,6 +31,7 @@ public class Donation {
     @Column(name="DONATION_CONTENT")
     private String content;
 
+    @Setter
     @Column(name="DONATION_CURRENT_AMOUNT")
     private int currentAmount;
 
@@ -45,9 +46,11 @@ public class Donation {
     @Enumerated(EnumType.STRING)
     private DonationStatus status;
 
+    @Setter
     @Column(name="DONATION_CREATE_AT")
     private LocalDate createdAt;
 
+    @Setter
     @Column(name="DONATION_MODIFIED_AT")
     private LocalDate modifiedAt;
 
