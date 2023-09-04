@@ -9,11 +9,11 @@ on:
     branches: [ Develop ]
 
 # --------------------------추가
-env:
-  PROJECT_NAME: Boogie_On_And_On
-  BUCKET_NAME: boogie-cicd-bucket
-  CODE_DEPLOY_APP_NAME: boogie_cicd
-  DEPLOYMENT_GROUP_NAME: boogie_instance
+#env:
+#  PROJECT_NAME: Boogie_On_And_On
+#  BUCKET_NAME: boogie-cicd-bucket
+#  CODE_DEPLOY_APP_NAME: boogie_cicd
+#  DEPLOYMENT_GROUP_NAME: boogie_instance
 # --------------------------추가
 
 jobs:
@@ -42,25 +42,40 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew clean build
 
-      # --------------------------추가
-      - name: Make Zip File
-        run: zip -qq -r ./$GITHUB_SHA.zip .
-        shell: bash
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_TOKEN}}
 
-      - name: Upload to S3
-        run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
-
-      - name: Code Deploy To EC2 instance
-        run: aws deploy create-deployment
-          --application-name $CODE_DEPLOY_APP_NAME
-          --deployment-config-name CodeDeployDefault.AllAtOnce
-          --deployment-group-name $DEPLOYMENT_GROUP_NAME
-          --s3-location bucket=$BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
-# --------------------------추가
+      - name: build and release to DockerHub
+        env:
+          NAME: LeeHusung # 계정 명
+          REPO: boogie # 레포 이름
+        run: |
+          docker build -t $REPO .
+          docker tag $REPO:latest $NAME/$REPO:latest
+          docker push $NAME/$REPO:latest
+#
+#      # --------------------------추가
+#      - name: Make Zip File
+#        run: zip -qq -r ./$GITHUB_SHA.zip .
+#        shell: bash
+#
+#      - name: Configure AWS credentials
+#        uses: aws-actions/configure-aws-credentials@v1
+#        with:
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          aws-region: ap-northeast-2
+#
+#      - name: Upload to S3
+#        run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
+#
+#      - name: Code Deploy To EC2 instance
+#        run: aws deploy create-deployment
+#          --application-name $CODE_DEPLOY_APP_NAME
+#          --deployment-config-name CodeDeployDefault.AllAtOnce
+#          --deployment-group-name $DEPLOYMENT_GROUP_NAME
+#          --s3-location bucket=$BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
+## --------------------------추가
