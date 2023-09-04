@@ -2,9 +2,9 @@ name: CI/CD
 
 on:
   push:
-    branches: [ test ]
+    branches: [ "Develop" ]
   pull_request:
-    branches: [ test ]
+    branches: [ "Develop" ]
 
 # --------------------------추가
 #env:
