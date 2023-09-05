@@ -7,9 +7,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import wintersprouts.boogie.auth.TokenForm;
 import wintersprouts.boogie.domain.member.Member;
+import wintersprouts.boogie.domain.member.MemberDepositMoneyForm;
 import wintersprouts.boogie.domain.member.MemberJoinRequestForm;
 import wintersprouts.boogie.domain.member.MemberLoginRequestForm;
 import wintersprouts.boogie.service.MemberServiceImpl;
+
+import java.security.Principal;
 
 @Slf4j
 @RestController
@@ -46,4 +49,16 @@ public class MemberController {
     public ResponseEntity<Void> test() {
         return ResponseEntity.ok().build();
     }
+  
+    @PatchMapping("/deposit")
+    public String deposit(Principal principal, @RequestBody MemberDepositMoneyForm memberDepositMoneyForm) {
+        String email = principal.getName();
+
+        Long balance = memberServiceImpl.updateAccount(email, memberDepositMoneyForm.getAddedAmount());
+
+        return "현재 잔액은 "+balance;
+    }
+
+    //기부하는 로직
+
 }
