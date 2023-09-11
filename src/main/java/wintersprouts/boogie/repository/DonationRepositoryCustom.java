@@ -6,5 +6,5 @@ import wintersprouts.boogie.domain.donation.DonationSearchCondition;
 import java.util.List;
 
 public interface DonationRepositoryCustom {
-    public List<Donation> getDanationByCondition(DonationSearchCondition condition);
+    public List<Donation> searchByConditions(DonationSearchCondition condition);
 }

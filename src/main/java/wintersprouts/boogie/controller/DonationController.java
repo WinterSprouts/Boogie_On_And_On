@@ -6,15 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import wintersprouts.boogie.auth.JwtTools;
-import wintersprouts.boogie.domain.donation.ApplyDonationForm;
-import wintersprouts.boogie.domain.donation.Donation;
-import wintersprouts.boogie.domain.donation.DonationStatus;
-import wintersprouts.boogie.domain.donation.DonationUpdateForm;
+import wintersprouts.boogie.domain.donation.*;
 import wintersprouts.boogie.domain.member.Member;
 import wintersprouts.boogie.repository.MemberRepository;
 import wintersprouts.boogie.service.DonationService;
@@ -22,6 +16,7 @@ import wintersprouts.boogie.service.DonationService;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -56,5 +51,10 @@ public class DonationController {
     public ResponseEntity<String> approveDonation(@RequestBody @Valid DonationUpdateForm form) {
         String message = donationService.approved(form.getDonationIndex());
         return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public List<Donation> searchByCondition(DonationSearchCondition condition){
+        return donationService.searchByConditions(condition);
     }
 }

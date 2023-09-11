@@ -6,10 +6,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wintersprouts.boogie.domain.donation.Donation;
+import wintersprouts.boogie.domain.donation.DonationSearchCondition;
 import wintersprouts.boogie.domain.donation.DonationStatus;
 import wintersprouts.boogie.repository.DonationRepository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -57,5 +59,10 @@ public class DonationServiceImpl implements DonationService {
         log.info("Execute Update Expired Donation");
         LocalDate now = LocalDate.now();
         donationRepository.updateExpiredDonations(DonationStatus.FINISH, now);
+    }
+
+    @Override
+    public List<Donation> searchByConditions(DonationSearchCondition condition) {
+        return null;
     }
 }
