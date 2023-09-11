@@ -57,7 +57,7 @@ public class Donation {
     /**
      * 이 기부에 기부한 사람 목록
      */
-//    @JsonIgnore
+    @JsonIgnore
 //    @OneToMany(fetch = FetchType.LAZY)
 //    @JoinColumn(name="DONATOR_PUBLISHER_ID")
     @OneToMany(mappedBy = "donation")
