@@ -6,4 +6,5 @@ import lombok.Data;
 public class DonationCurationForm {
     private String title;
     private String content;
+    private DonationStatus status;
 }

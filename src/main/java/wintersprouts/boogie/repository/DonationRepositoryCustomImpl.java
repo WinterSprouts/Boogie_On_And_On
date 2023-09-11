@@ -51,7 +51,7 @@ public class DonationRepositoryCustomImpl implements DonationRepositoryCustom {
                     DonationCurationForm form = new DonationCurationForm();
                     form.setTitle(each.getTitle());
                     form.setContent(each.getContent());
-
+                    form.setStatus(each.getStatus());
                     return form;
                 }).collect(Collectors.toList());
     }
