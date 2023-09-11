@@ -24,7 +24,7 @@ public class DonationRepositoryCustomImpl implements DonationRepositoryCustom {
 
 
     /**
-     * QueryDSL 을 통한 동적 쿼리를 생성하고 조회합니다. 
+     * QueryDSL 을 통한 동적 쿼리를 생성하고 조회합니다.
      * @param condition
      * @return
      */

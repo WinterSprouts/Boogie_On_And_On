@@ -63,6 +63,9 @@ public class DonationServiceImpl implements DonationService {
         donationRepository.updateExpiredDonations(DonationStatus.FINISH, now);
     }
 
+    /**
+     * 모든 도네이션을 JPA 로 조회합니다.
+     */
     @Override
     public List<DonationCurationForm> selectAll() {
         List<DonationCurationForm> collect = donationRepository.findAll().stream()
@@ -77,6 +80,9 @@ public class DonationServiceImpl implements DonationService {
         return collect;
     }
 
+    /**
+     * 도네이션을 Condition 에 따라 QueryDsl 로 조회합니다.
+     */
     @Override
     public List<DonationCurationForm> selectByCondition(DonationSearchCondition condition) {
         return donationRepository.selectByCondition(condition);
