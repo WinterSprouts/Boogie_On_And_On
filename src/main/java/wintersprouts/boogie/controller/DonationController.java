@@ -1,11 +1,9 @@
 package wintersprouts.boogie.controller;
 
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import wintersprouts.boogie.auth.JwtTools;
 import wintersprouts.boogie.domain.donation.*;
@@ -15,7 +13,6 @@ import wintersprouts.boogie.service.DonationService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -53,8 +50,9 @@ public class DonationController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @GetMapping("/search")
-    public List<Donation> searchByCondition(DonationSearchCondition condition){
-        return donationService.searchByConditions(condition);
+
+    @GetMapping("/getAllDonations")
+    public List<DonationCurationForm> selectAll(){
+        return donationService.selectAll();
     }
 }

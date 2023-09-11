@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.EntityManager;
 
-@EnableJpaAuditing
 @Configuration
 public class QueryDslConfig {
 

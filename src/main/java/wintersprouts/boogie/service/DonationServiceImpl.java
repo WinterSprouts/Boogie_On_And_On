@@ -6,12 +6,14 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wintersprouts.boogie.domain.donation.Donation;
+import wintersprouts.boogie.domain.donation.DonationCurationForm;
 import wintersprouts.boogie.domain.donation.DonationSearchCondition;
 import wintersprouts.boogie.domain.donation.DonationStatus;
 import wintersprouts.boogie.repository.DonationRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -33,7 +35,7 @@ public class DonationServiceImpl implements DonationService {
 
     /**
      * Donation 의 WAITING Status 를<br>
-     * APPORVED 로 변경합니다. 
+     * APPORVED 로 변경합니다.
      */
     @Override
     @Transactional
@@ -63,6 +65,20 @@ public class DonationServiceImpl implements DonationService {
 
     @Override
     public List<Donation> searchByConditions(DonationSearchCondition condition) {
-        return null;
+        return donationRepository.searchByConditions(condition);
+    }
+
+    @Override
+    public List<DonationCurationForm> selectAll() {
+        List<DonationCurationForm> collect = donationRepository.findAll().stream()
+                .map(donation -> {
+                    var dto = new DonationCurationForm();
+                    dto.setContent(donation.getContent());
+                    dto.setTitle(donation.getTitle());
+
+                    return dto;
+                }).collect(Collectors.toList());
+
+        return collect;
     }
 }
