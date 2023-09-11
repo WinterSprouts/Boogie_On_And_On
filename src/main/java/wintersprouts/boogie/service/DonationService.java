@@ -17,6 +17,7 @@ public interface DonationService {
      */
     void updateExpiredDonations();
 
+    @Deprecated
     List<DonationCurationForm> selectAll();
 
     List<DonationCurationForm> selectByCondition(DonationSearchCondition condition);

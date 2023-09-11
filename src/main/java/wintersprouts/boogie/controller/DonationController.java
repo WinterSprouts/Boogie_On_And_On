@@ -50,7 +50,7 @@ public class DonationController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-
+    @Deprecated
     @GetMapping("/getAllDonations")
     public List<DonationCurationForm> selectAll() {
         return donationService.selectAll();
