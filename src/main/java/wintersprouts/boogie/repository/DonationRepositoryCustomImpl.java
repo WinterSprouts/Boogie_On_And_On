@@ -1,13 +1,17 @@
 package wintersprouts.boogie.repository;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 import wintersprouts.boogie.domain.donation.Donation;
+import wintersprouts.boogie.domain.donation.DonationCurationForm;
 import wintersprouts.boogie.domain.donation.DonationSearchCondition;
 import wintersprouts.boogie.domain.donation.QDonation;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class DonationRepositoryCustomImpl implements DonationRepositoryCustom {
@@ -18,22 +22,37 @@ public class DonationRepositoryCustomImpl implements DonationRepositoryCustom {
         this.query = new JPAQueryFactory(em);
     }
 
+
     /**
-     * Condition 을 활용해 동적쿼리를 생성합니다.
-     *
+     * QueryDSL 을 통한 동적 쿼리를 생성하고 조회합니다. 
      * @param condition
      * @return
      */
     @Override
-    public List<Donation> searchByConditions(DonationSearchCondition condition) {
+    public List<DonationCurationForm> selectByCondition(DonationSearchCondition condition) {
         QDonation donation = QDonation.donation;
 
-        List<Donation> result = query
-                .select(donation)
+        BooleanBuilder builder = new BooleanBuilder();
+
+        if (StringUtils.hasText(condition.getContent())) {
+            builder.and(donation.content.contains(condition.getContent()));
+        }
+        if (StringUtils.hasText(condition.getTitle())) {
+            builder.and(donation.title.contains(condition.getTitle()));
+        }
+
+        List<Donation> fetch = query.select(donation)
                 .from(donation)
+                .where(builder)
                 .fetch();
 
-        return result;
-    }
+        return fetch.stream()
+                .map(each -> {
+                    DonationCurationForm form = new DonationCurationForm();
+                    form.setTitle(each.getTitle());
+                    form.setContent(each.getContent());
 
+                    return form;
+                }).collect(Collectors.toList());
+    }
 }

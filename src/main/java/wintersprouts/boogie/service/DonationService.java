@@ -17,7 +17,7 @@ public interface DonationService {
      */
     void updateExpiredDonations();
 
-    List<Donation> searchByConditions(DonationSearchCondition condition);
-
     List<DonationCurationForm> selectAll();
+
+    List<DonationCurationForm> selectByCondition(DonationSearchCondition condition);
 }

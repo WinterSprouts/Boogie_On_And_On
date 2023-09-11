@@ -64,11 +64,6 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public List<Donation> searchByConditions(DonationSearchCondition condition) {
-        return donationRepository.searchByConditions(condition);
-    }
-
-    @Override
     public List<DonationCurationForm> selectAll() {
         List<DonationCurationForm> collect = donationRepository.findAll().stream()
                 .map(donation -> {
@@ -80,5 +75,10 @@ public class DonationServiceImpl implements DonationService {
                 }).collect(Collectors.toList());
 
         return collect;
+    }
+
+    @Override
+    public List<DonationCurationForm> selectByCondition(DonationSearchCondition condition) {
+        return donationRepository.selectByCondition(condition);
     }
 }

@@ -52,7 +52,12 @@ public class DonationController {
 
 
     @GetMapping("/getAllDonations")
-    public List<DonationCurationForm> selectAll(){
+    public List<DonationCurationForm> selectAll() {
         return donationService.selectAll();
+    }
+
+    @GetMapping("/getdonationbycondition")
+    public List<DonationCurationForm> selectByConditions(@RequestBody DonationSearchCondition condition){
+        return donationService.selectByCondition(condition);
     }
 }
