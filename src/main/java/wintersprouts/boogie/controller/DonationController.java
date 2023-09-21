@@ -6,10 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import wintersprouts.boogie.auth.JwtTools;
 import wintersprouts.boogie.domain.donation.ApplyDonationForm;
 import wintersprouts.boogie.domain.donation.Donation;
@@ -22,6 +19,7 @@ import wintersprouts.boogie.service.DonationService;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -57,4 +55,26 @@ public class DonationController {
         String message = donationService.approved(form.getDonationIndex());
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+
+    @GetMapping("/")
+    public ResponseEntity<List<Donation>> findAll() {
+        List<Donation> all = donationService.findAll();
+
+        return ResponseEntity.ok().body(all);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Donation> findOne(@PathVariable Long id) {
+        Donation donation = donationService.findOne(id);
+
+        return ResponseEntity.ok().body(donation);
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<String> donate(@PathVariable Long id) {
+
+        return null;
+    }
+
+
 }

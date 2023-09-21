@@ -10,6 +10,7 @@ import wintersprouts.boogie.domain.donation.DonationStatus;
 import wintersprouts.boogie.repository.DonationRepository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -58,4 +59,15 @@ public class DonationServiceImpl implements DonationService {
         LocalDate now = LocalDate.now();
         donationRepository.updateExpiredDonations(DonationStatus.FINISH, now);
     }
+
+    @Override
+    public List<Donation> findAll() {
+        return donationRepository.findAll();
+    }
+
+    @Override
+    public Donation findOne(Long id) {
+        return donationRepository.findById(id).get();
+    }
+
 }

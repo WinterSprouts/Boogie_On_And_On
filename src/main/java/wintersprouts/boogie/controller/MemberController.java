@@ -59,6 +59,4 @@ public class MemberController {
         return "현재 잔액은 "+balance;
     }
 
-    //기부하는 로직
-
 }
