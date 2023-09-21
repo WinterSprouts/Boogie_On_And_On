@@ -1,8 +1,10 @@
 package wintersprouts.boogie.service;
 
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.transaction.annotation.Transactional;
 import wintersprouts.boogie.domain.donation.Donation;
+import wintersprouts.boogie.domain.donation.DonationCurationForm;
+import wintersprouts.boogie.domain.donation.DonationSearchCondition;
+
+import java.util.List;
 
 import java.util.List;
 
@@ -17,8 +19,10 @@ public interface DonationService {
      */
     void updateExpiredDonations();
 
-    public List<Donation> findAll();
+    @Deprecated
+    List<DonationCurationForm> selectAll();
+
+    List<DonationCurationForm> selectByCondition(DonationSearchCondition condition);
 
     Donation findOne(Long id);
-
 }
