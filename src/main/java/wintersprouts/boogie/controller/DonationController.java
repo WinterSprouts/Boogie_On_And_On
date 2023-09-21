@@ -13,6 +13,7 @@ import wintersprouts.boogie.service.DonationService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Slf4j
@@ -68,9 +69,14 @@ public class DonationController {
         return ResponseEntity.ok().body(donation);
     }
 
+    /**
+     * 기부하기
+     */
     @PostMapping("/{id}")
-    public ResponseEntity<String> donate(@PathVariable Long id) {
+    public ResponseEntity<Boolean> donating(@PathVariable("id") Long id, @RequestParam("amount") Long amount, Principal principal) {
+        String memberEmail = principal.getName();
+        boolean donate = donationService.donating(id, amount, memberEmail);
 
-        return null;
+        return donate ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 }

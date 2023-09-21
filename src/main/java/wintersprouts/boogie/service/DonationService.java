@@ -6,8 +6,6 @@ import wintersprouts.boogie.domain.donation.DonationSearchCondition;
 
 import java.util.List;
 
-import java.util.List;
-
 public interface DonationService {
     public boolean applyDonation(Donation donation);
 
@@ -25,4 +23,7 @@ public interface DonationService {
     List<DonationCurationForm> selectByCondition(DonationSearchCondition condition);
 
     Donation findOne(Long id);
+
+    boolean donating(Long id, Long amount, String memberEmail);
+
 }
