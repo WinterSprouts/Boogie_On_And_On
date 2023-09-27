@@ -1,6 +1,5 @@
 package wintersprouts.boogie.service;
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,9 +28,8 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public TokenForm login(MemberLoginRequestForm memberLoginRequestForm) {
         // 1. LoginDto 를 기반으로 Authentication 객체 생성
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(memberLoginRequestForm.getLoginId(), memberLoginRequestForm.getLoginPw());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(memberLoginRequestForm.getLoginEmail(), memberLoginRequestForm.getLoginPw());
 
-        log.info("authToken = {}", authenticationToken.toString());
         // 2. 검증
         Authentication authentication = null;
         try {
@@ -54,4 +52,20 @@ public class MemberServiceImpl implements MemberService {
 
         return StringUtils.hasText(save.getEmail());
     }
+
+    @Override
+    public Member findByEmail(String email) {
+        return memberRepository.findByEmail(email).get();
+    }
+
+    @Transactional
+    @Override
+    public Long updateAccount(String email, Long money) {
+        Member member = memberRepository.findByEmail(email).get();
+        Long account = member.getAccount();
+        member.setAccount(account+money);
+
+        return member.getAccount();
+    }
+
 }

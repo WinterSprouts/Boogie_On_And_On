@@ -31,36 +31,40 @@ public class Donation {
     @Column(name="DONATION_CONTENT")
     private String content;
 
+    @Setter
     @Column(name="DONATION_CURRENT_AMOUNT")
-    private int currentAmount;
+    private Long currentAmount;
 
     @Column(name="DONATION_TARGET_AMOUNT")
-    private int targetAmount;
+    private Long targetAmount;
 
     @Column(name = "DONATION_DUE_DATE")
     private LocalDate dueDate;
 
+    @Setter
     @Column(name="DONATION_STATUS")
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private DonationStatus status;
 
+    @Setter
     @Column(name="DONATION_CREATE_AT")
     private LocalDate createdAt;
 
+    @Setter
     @Column(name="DONATION_MODIFIED_AT")
     private LocalDate modifiedAt;
 
     /**
      * 이 기부에 기부한 사람 목록
      */
-//    @JsonIgnore
+    @JsonIgnore
 //    @OneToMany(fetch = FetchType.LAZY)
 //    @JoinColumn(name="DONATOR_PUBLISHER_ID")
     @OneToMany(mappedBy = "donation")
     private List<Donator> donators = new ArrayList<>();
 
     @Builder
-    public Donation(Member donationPublisher, String title, String content, int currentAmount, int targetAmount, LocalDate dueDate, LocalDate createdAt, LocalDate modifiedAt, DonationStatus status) {
+    public Donation(Member donationPublisher, String title, String content, Long currentAmount, Long targetAmount, LocalDate dueDate, LocalDate createdAt, LocalDate modifiedAt, DonationStatus status) {
         this.donationPublisher = donationPublisher;
         this.title = title;
         this.content = content;

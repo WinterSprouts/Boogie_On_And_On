@@ -5,11 +5,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import wintersprouts.boogie.auth.JwtTools;
 import wintersprouts.boogie.auth.TokenForm;
 import wintersprouts.boogie.domain.member.Member;
+import wintersprouts.boogie.domain.member.MemberDepositMoneyForm;
 import wintersprouts.boogie.domain.member.MemberJoinRequestForm;
 import wintersprouts.boogie.domain.member.MemberLoginRequestForm;
 import wintersprouts.boogie.service.MemberServiceImpl;
+
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 
 @Slf4j
 @RestController
@@ -17,9 +22,9 @@ import wintersprouts.boogie.service.MemberServiceImpl;
 @RequestMapping("/members")
 public class MemberController {
 
+    private final JwtTools jwtTools;
     private final MemberServiceImpl memberServiceImpl;
     private final PasswordEncoder passwordEncoder;
-
 
     @PostMapping("/login")
     public TokenForm login(@RequestBody MemberLoginRequestForm memberLoginRequestForm) {
@@ -42,8 +47,12 @@ public class MemberController {
         return memberServiceImpl.join(joinMember) ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
     }
 
-    @PostMapping("/test")
-    public String test() {
-        return "이거 보면 성공한거임";
+    @PatchMapping("/deposit")
+    public String deposit(@RequestBody MemberDepositMoneyForm memberDepositMoneyForm, HttpServletRequest request) {
+        String memberEmail = jwtTools.getMemberEmailByRequest(request);
+        Long balance = memberServiceImpl.updateAccount(memberEmail, memberDepositMoneyForm.getAddedAmount());
+
+        return "현재 잔액은 "+balance;
     }
+
 }
