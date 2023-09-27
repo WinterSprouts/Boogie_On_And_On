@@ -21,4 +21,9 @@ public interface DonationService {
     List<DonationCurationForm> selectAll();
 
     List<DonationCurationForm> selectByCondition(DonationSearchCondition condition);
+
+    Donation findOne(Long id);
+
+    boolean donating(Long id, Long amount, String memberEmail);
+
 }

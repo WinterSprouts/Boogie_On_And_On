@@ -13,6 +13,7 @@ import wintersprouts.boogie.service.DonationService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Slf4j
@@ -59,5 +60,24 @@ public class DonationController {
     @GetMapping("/getdonationbycondition")
     public List<DonationCurationForm> selectByConditions(@RequestBody DonationSearchCondition condition){
         return donationService.selectByCondition(condition);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Donation> findOne(@PathVariable Long id) {
+        Donation donation = donationService.findOne(id);
+
+        return ResponseEntity.ok().body(donation);
+    }
+
+    /**
+     * 기부하기
+     */
+    @PatchMapping("/{id}")
+    public ResponseEntity<Boolean> donating(@PathVariable("id") Long id, @RequestParam("amount") Long amount, HttpServletRequest request) {
+
+        String memberEmail = jwtTools.getMemberEmailByRequest(request);
+        boolean donate = donationService.donating(id, amount, memberEmail);
+
+        return donate ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
     }
 }

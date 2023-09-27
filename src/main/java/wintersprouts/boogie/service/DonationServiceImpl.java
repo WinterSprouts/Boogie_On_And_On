@@ -9,7 +9,9 @@ import wintersprouts.boogie.domain.donation.Donation;
 import wintersprouts.boogie.domain.donation.DonationCurationForm;
 import wintersprouts.boogie.domain.donation.DonationSearchCondition;
 import wintersprouts.boogie.domain.donation.DonationStatus;
+import wintersprouts.boogie.domain.member.Member;
 import wintersprouts.boogie.repository.DonationRepository;
+import wintersprouts.boogie.repository.MemberRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 public class DonationServiceImpl implements DonationService {
 
     private final DonationRepository donationRepository;
+    private final MemberRepository memberRepository;
 
     /**
      * 도네이션을 등록합니다.
@@ -86,5 +89,27 @@ public class DonationServiceImpl implements DonationService {
     @Override
     public List<DonationCurationForm> selectByCondition(DonationSearchCondition condition) {
         return donationRepository.selectByCondition(condition);
+    }
+
+    @Override
+    public Donation findOne(Long id) {
+        return donationRepository.findById(id).get();
+    }
+
+    @Override
+    @Transactional
+    public boolean donating(Long id, Long amount, String memberEmail) {
+        Member member = memberRepository.findByEmail(memberEmail).get();
+        Long account = member.getAccount();
+        if(account<amount) {
+            return false;
+        }
+        member.setAccount(account - amount);
+
+        Donation donation = donationRepository.findById(id).get();
+        Long currentAmount = donation.getCurrentAmount();
+        donation.setCurrentAmount(currentAmount + amount);
+
+        return true;
     }
 }

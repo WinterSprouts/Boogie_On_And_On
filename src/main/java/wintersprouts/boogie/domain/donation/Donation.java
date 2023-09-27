@@ -33,10 +33,10 @@ public class Donation {
 
     @Setter
     @Column(name="DONATION_CURRENT_AMOUNT")
-    private int currentAmount;
+    private Long currentAmount;
 
     @Column(name="DONATION_TARGET_AMOUNT")
-    private int targetAmount;
+    private Long targetAmount;
 
     @Column(name = "DONATION_DUE_DATE")
     private LocalDate dueDate;
@@ -64,7 +64,7 @@ public class Donation {
     private List<Donator> donators = new ArrayList<>();
 
     @Builder
-    public Donation(Member donationPublisher, String title, String content, int currentAmount, int targetAmount, LocalDate dueDate, LocalDate createdAt, LocalDate modifiedAt, DonationStatus status) {
+    public Donation(Member donationPublisher, String title, String content, Long currentAmount, Long targetAmount, LocalDate dueDate, LocalDate createdAt, LocalDate modifiedAt, DonationStatus status) {
         this.donationPublisher = donationPublisher;
         this.title = title;
         this.content = content;

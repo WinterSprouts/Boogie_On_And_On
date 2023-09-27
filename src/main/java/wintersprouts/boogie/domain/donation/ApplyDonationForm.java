@@ -18,7 +18,7 @@ public class ApplyDonationForm {
     private String content;
 
     @NotNull(message = "목표 금액은 필수 사항입니다. ")
-    private int targetAmount;
+    private Long targetAmount;
 
     @Future(message = "마감일은 과거일 수 없습니다. ")
     private LocalDate dueDate;
