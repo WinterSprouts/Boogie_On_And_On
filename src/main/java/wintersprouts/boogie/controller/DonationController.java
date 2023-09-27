@@ -73,8 +73,9 @@ public class DonationController {
      * 기부하기
      */
     @PatchMapping("/{id}")
-    public ResponseEntity<Boolean> donating(@PathVariable("id") Long id, @RequestParam("amount") Long amount, Principal principal) {
-        String memberEmail = principal.getName();
+    public ResponseEntity<Boolean> donating(@PathVariable("id") Long id, @RequestParam("amount") Long amount, HttpServletRequest request) {
+
+        String memberEmail = jwtTools.getMemberEmailByRequest(request);
         boolean donate = donationService.donating(id, amount, memberEmail);
 
         return donate ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
