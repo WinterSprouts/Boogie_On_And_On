@@ -72,11 +72,11 @@ public class DonationController {
     /**
      * 기부하기
      */
-    @PostMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Boolean> donating(@PathVariable("id") Long id, @RequestParam("amount") Long amount, Principal principal) {
         String memberEmail = principal.getName();
         boolean donate = donationService.donating(id, amount, memberEmail);
 
-        return donate ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+        return donate ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
     }
 }
