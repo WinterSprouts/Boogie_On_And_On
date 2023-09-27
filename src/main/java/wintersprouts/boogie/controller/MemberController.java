@@ -45,11 +45,6 @@ public class MemberController {
         return memberServiceImpl.join(joinMember) ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
     }
 
-    @PostMapping("/test")
-    public ResponseEntity<Void> test() {
-        return ResponseEntity.ok().build();
-    }
-  
     @PatchMapping("/deposit")
     public String deposit(Principal principal, @RequestBody MemberDepositMoneyForm memberDepositMoneyForm) {
         String email = principal.getName();
